@@ -7,7 +7,8 @@ import request from "../../api";
 import moment from "moment";
 import numeral from "numeral";
 
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useNavigate } from "react-router-dom";
 
 const Video = ({ video }) => {
   const {
@@ -29,6 +30,8 @@ const Video = ({ video }) => {
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
 
   const _videoId = id?.videoId || id;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const get_video_details = async () => {
@@ -61,12 +64,16 @@ const Video = ({ video }) => {
     get_channel_icon();
   }, [channelId]);
 
+  const handleVideoClick = () => {
+    navigate(`/watch/${_videoId}`);
+  };
+
   return (
-    <div className="video">
+    <div className="video" onClick={handleVideoClick}>
       <div className="video__top">
         {/* <img src={medium.url} alt="" /> */}
         <LazyLoadImage src={medium.url} effect="blur" />
-        <span className='video__top__duration'>{_duration}</span>
+        <span className="video__top__duration">{_duration}</span>
       </div>
       <div className="video__title">{title}</div>
       <div className="video__details">
@@ -77,7 +84,7 @@ const Video = ({ video }) => {
       </div>
       <div className="video__channel">
         {/* <img src={channelIcon?.url} alt="icon" /> */}
-        <LazyLoadImage src={channelIcon?.url} effect='blur' />
+        <LazyLoadImage src={channelIcon?.url} effect="blur" />
         <p>{channelTitle}</p>
       </div>
     </div>
