@@ -4,6 +4,7 @@ import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdNotifications, MdApps } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Header = ({ handleToggleSidebar }) => {
   const [input, setInput] = useState("");
@@ -16,8 +17,10 @@ const Header = ({ handleToggleSidebar }) => {
     navigate(`/search/${input}`);
   };
 
+  const user = useSelector((state) => state.auth?.user);
+
   return (
-    <div className="border border-dark header">
+    <div className="header">
       <FaBars
         className="header__menu"
         size={26}
@@ -45,10 +48,7 @@ const Header = ({ handleToggleSidebar }) => {
       <div className="header__icons">
         <MdNotifications size={28} />
         <MdApps size={28} />
-        <img
-          src="https://cdn.icon-icons.com/icons2/2643/PNG/512/avatar_female_woman_person_people_white_tone_icon_159360.png"
-          alt="avatar"
-        ></img>
+        <img src={user?.photoURL} alt="avatar"></img>
       </div>
     </div>
   );
